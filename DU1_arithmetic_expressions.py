@@ -10,7 +10,14 @@ def operation(a, b, operator):
         return a - b
 
 def build_new_expression(expression, i):
-    return expression[:i-1] + str(operation(int(expression[i-1]), int(expression[i+1]), expression[i])) + expression[i+2:]
+    j = i
+    k = i
+    while j-1 > 0 and expression[j-1].isdigit():
+        j -= 1
+    while k+1 < len(expression) and expression[k+1].isdigit():
+        k += 1
+    return expression[:j-1] + str(operation(int(expression[j-1:i]), int(expression[i+1:k+1]), expression[i])) + expression[k+1:]
+
 
 def compute_expression(expression): # 1+2*3+4
     i = 0
@@ -43,7 +50,7 @@ def remove_brackets(expression): # 1*(3+5) / 2 + 1 * 4 + ((4+5) * 2) +1
 
 rows_count = 1
 for i in range(rows_count):
-    expression = '(2*(3+4)+5)'
+    expression = '1 + (2*(3+4)+5)'
     expression = expression.replace(' ', '')
     expression = remove_brackets(expression)
     expression = compute_expression(expression)
