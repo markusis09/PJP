@@ -3,7 +3,7 @@ def operation(a, b, operator):
     if operator == '*':
         return a * b
     elif operator == '/':
-        return a / b
+        return a // b
     elif operator == '+':
         return a + b
     elif operator == '-':
@@ -16,6 +16,9 @@ def build_new_expression(expression, i):
         j -= 1
     while k+1 < len(expression) and expression[k+1].isdigit():
         k += 1
+
+    if(j > 1):
+        return expression[:j] + str(operation(int(expression[j:i]), int(expression[i+1:k+1]), expression[i])) + expression[k+1:]
     return expression[:j-1] + str(operation(int(expression[j-1:i]), int(expression[i+1:k+1]), expression[i])) + expression[k+1:]
 
 
@@ -48,10 +51,18 @@ def remove_brackets(expression): # 1*(3+5) / 2 + 1 * 4 + ((4+5) * 2) +1
     return expression
 
 
-rows_count = 1
+rows_count = int(input())
+solved_expressions = []
+
 for i in range(rows_count):
-    expression = '1 + (2*(3+4)+5)'
-    expression = expression.replace(' ', '')
-    expression = remove_brackets(expression)
-    expression = compute_expression(expression)
+    expression = input()
+    try:
+        expression = expression.replace(' ', '')
+        expression = remove_brackets(expression)
+        expression = compute_expression(expression)
+    except:
+        expression = 'ERROR'
+    solved_expressions.append(expression)
+
+for expression in solved_expressions:
     print(expression)
